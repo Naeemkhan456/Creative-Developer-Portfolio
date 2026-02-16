@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Playfair Display', serif;
+
+  /* Light Theme - Clean, Professional Slate/Blue */
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222 47% 11.2%;
+  
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215 16% 47%;
+  
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222 47% 11.2%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Dark Theme - Deep Slate/Indigo */
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  
+  --primary: 217 91% 60%;
+  --primary-foreground: 222 47% 11%;
+  
+  --secondary: 217 32% 17%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20% 65%;
+  
+  --accent: 217 32% 17%;
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 217 32% 17%;
+  --input: 217 32% 17%;
+  --ring: 224.3 76.3% 48%;
+  
+  --card: 222 47% 11%; /* Matches bg for seamless look, use border/shadow for separation */
+  --card-foreground: 210 40% 98%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased font-sans transition-colors duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50 shadow-lg shadow-black/5 hover:shadow-xl hover:border-primary/20 transition-all duration-300;
+  }
+  
+  .dark .glass-card {
+    @apply bg-card/40 border-white/10 hover:border-white/20 shadow-none hover:bg-card/60;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .nav-link {
+    @apply relative text-muted-foreground hover:text-foreground transition-colors duration-200 py-2;
+  }
+  
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300;
+  }
+  
+  .nav-link:hover::after, .nav-link.active::after {
+    @apply w-full;
+  }
+  
+  .nav-link.active {
+    @apply text-foreground font-medium;
+  }
+}
