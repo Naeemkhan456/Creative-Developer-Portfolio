@@ -49,9 +49,9 @@ const naeemExperience = {
     "Creative Content Creation", "UI/UX Design", "Digital Marketing Support"
   ],
   education: {
-    degree: "Bachelor of Computer Science",
+    degree: "Bachelor of Software Engineering Science",
     university: "University of Technology",
-    year: "2019"
+    year: "2021"    
   },
   projects: [
     {
