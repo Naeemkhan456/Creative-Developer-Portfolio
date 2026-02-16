@@ -16,30 +16,37 @@ interface Message {
 
 const naeemExperience = {
   name: "Naeem Khan",
-  title: "Creative Developer",
+  title: "Creative Developer & Digital Services Provider",
   experience: [
     {
-      role: "Full Stack Developer",
-      company: "Tech Company",
+      role: "Full Stack Developer & Creative Services",
+      company: "Freelance & Consulting",
       duration: "2022 - Present",
-      description: "Developing modern web applications with React, Node.js, and TypeScript"
+      description: "Developing modern web applications and providing comprehensive digital services including video editing, graphic design, and content creation"
     },
     {
       role: "Frontend Developer",
-      company: "Digital Agency",
-      duration: "2020 - 2022",
-      description: "Created responsive and interactive user interfaces using React and Vue.js"
+      company: "Ideal Innovative Solutions",
+      duration: "2020 - 2026",
+      description: "Created responsive and interactive user interfaces using Angular and React plus nextjs"
     },
     {
-      role: "Junior Developer",
-      company: "Startup Inc",
-      duration: "2019 - 2020",
-      description: "Built and maintained web applications using JavaScript and modern frameworks"
+      role: "Junior Developer & Content Creator",
+      company: "Ideal Innovative Solutions",
+      duration: "2020 - 2021",
+      description: "Built web applications and provided creative services including data entry, assignment making, and technical documentation"
     }
   ],
   skills: [
     "React", "TypeScript", "Node.js", "Express", "Tailwind CSS", 
-    "PostgreSQL", "MongoDB", "GraphQL", "Next.js", "Vue.js"
+    "PostgreSQL", "MongoDB", "GraphQL", "Next.js", "Vue.js",
+    "Video Editing", "Graphic Design", "Data Entry", "Content Creation",
+    "Technical Writing", "Assignment Making", "Flex Designing"
+  ],
+  services: [
+    "Web Development", "Video Content Editing", "Graphic/Flex Designing",
+    "Data Entry Services", "Assignment Making", "Technical Documentation",
+    "Creative Content Creation", "UI/UX Design", "Digital Marketing Support"
   ],
   education: {
     degree: "Bachelor of Computer Science",
@@ -49,15 +56,25 @@ const naeemExperience = {
   projects: [
     {
       name: "E-Commerce Platform",
-      tech: ["React", "Node.js", "MongoDB"],
-      description: "Full-stack e-commerce solution with payment integration"
+      tech: ["React", "Node.js", "MongoDB", "Video Content"],
+      description: "Full-stack e-commerce solution with payment integration and promotional video content"
     },
     {
-      name: "Portfolio Website",
-      tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
-      description: "Personal portfolio showcasing projects and skills"
+      name: "Creative Portfolio Website",
+      tech: ["Next.js", "Tailwind CSS", "Framer Motion", "Graphic Design"],
+      description: "Personal portfolio showcasing projects, skills, and creative services with animated graphics"
+    },
+    {
+      name: "Video Editing Platform",
+      tech: ["React", "TypeScript", "Video APIs"],
+      description: "Web-based video editing tool with graphic design integration"
     }
-  ]
+  ],
+  contact: {
+    email: "naeem78804@gmail.com",
+    phone: "+923409192279",
+    location: "Islamabad, Pakistan"
+  }
 };
 
 export default function AIChat() {
@@ -87,18 +104,38 @@ export default function AIChat() {
     const lowerMessage = userMessage.toLowerCase();
     
     if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-      return `Hi there! I can tell you all about ${naeemExperience.name}'s background. What would you like to know?`;
+      return `Hi there! I can tell you all about ${naeemExperience.name}'s background, skills, and creative services. What would you like to know?`;
     }
     
     if (lowerMessage.includes('experience') || lowerMessage.includes('work')) {
       const expText = naeemExperience.experience.map(exp => 
-        `**${exp.role}** at ${exp.company} (${exp.duration}): ${exp.description}`
+        `**${exp.role}** at ${exp.company} (${exp.duration}):\n${exp.description}`
       ).join('\n\n');
       return `${naeemExperience.name}'s Work Experience:\n\n${expText}`;
     }
     
+    if (lowerMessage.includes('services') || lowerMessage.includes('offer') || lowerMessage.includes('provide')) {
+      return `${naeemExperience.name}'s Services:\n\n${naeemExperience.services.map(service => `• ${service}`).join('\n')}\n\nFeel free to ask about any specific service!`;
+    }
+    
+    if (lowerMessage.includes('video') || lowerMessage.includes('editing')) {
+      return `**Video Content Editing Services:**\n\n${naeemExperience.name} provides professional video editing services including:\n• Video content creation and editing\n• Promotional video production\n• Web-based video editing tools\n• Integration with graphic design elements\n\nContact: ${naeemExperience.contact.email}`;
+    }
+    
+    if (lowerMessage.includes('graphic') || lowerMessage.includes('design') || lowerMessage.includes('flex')) {
+      return `**Graphic & Flex Designing Services:**\n\n${naeemExperience.name} offers:\n• Graphic design for digital and print\n• Flex banner designing\n• UI/UX design services\n• Creative content creation\n• Brand identity design\n\nEmail: ${naeemExperience.contact.email}`;
+    }
+    
+    if (lowerMessage.includes('data') || lowerMessage.includes('entry')) {
+      return `**Data Entry Services:**\n\nProfessional data entry services including:\n• Accurate data input and management\n• Database maintenance\n• Spreadsheet organization\n• Technical documentation\n• Data processing and cleaning\n\nContact: ${naeemExperience.contact.phone}`;
+    }
+    
+    if (lowerMessage.includes('assignment') || lowerMessage.includes('writing')) {
+      return `**Assignment Making & Writing Services:**\n\nAcademic and professional services:\n• Assignment creation and editing\n• Technical writing\n• Documentation preparation\n• Content development\n• Research assistance\n\n📧 ${naeemExperience.contact.email}`;
+    }
+    
     if (lowerMessage.includes('skills') || lowerMessage.includes('technologies')) {
-      return `${naeemExperience.name}'s Technical Skills:\n\n${naeemExperience.skills.join(', ')}`;
+      return `${naeemExperience.name}'s Technical Skills:\n\n**Development:** ${naeemExperience.skills.slice(0, 10).join(', ')}\n\n**Creative Services:** ${naeemExperience.skills.slice(10).join(', ')}`;
     }
     
     if (lowerMessage.includes('education') || lowerMessage.includes('degree')) {
@@ -112,11 +149,15 @@ export default function AIChat() {
       return `Featured Projects:\n\n${projectText}`;
     }
     
-    if (lowerMessage.includes('who') || lowerMessage.includes('about')) {
-      return `${naeemExperience.name} is a ${naeemExperience.title} with expertise in modern web development. He has experience building full-stack applications and specializes in React, TypeScript, and Node.js ecosystems.`;
+    if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone')) {
+      return `**Contact Information:**\n📧 Email: ${naeemExperience.contact.email}\n📱 Phone: ${naeemExperience.contact.phone}\n📍 Location: ${naeemExperience.contact.location}\n\nAvailable for remote work and freelance projects!`;
     }
     
-    return `I can tell you about ${naeemExperience.name}'s experience, skills, education, or projects. What specific information would you like?`;
+    if (lowerMessage.includes('who') || lowerMessage.includes('about')) {
+      return `${naeemExperience.name} is a ${naeemExperience.title} with expertise in modern web development and comprehensive digital services. He specializes in React, TypeScript, and Node.js ecosystems, plus creative services like video editing, graphic design, and content creation.`;
+    }
+    
+    return `I can tell you about ${naeemExperience.name}'s experience, skills, services (web development, video editing, graphic design, data entry, assignments), education, projects, or contact information. What specific information would you like?`;
   };
 
   const handleSendMessage = () => {
