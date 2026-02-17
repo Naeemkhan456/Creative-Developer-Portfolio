@@ -4,7 +4,9 @@ import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
 import { insertSkillSchema, insertProjectSchema, insertExperienceSchema, insertContactMessageSchema } from "@shared/schema";
-import { openai } from "./replit_integrations/image/client";
+// `openai` integration is optional in this repo. Import it dynamically
+// inside the route handler so the server can still start when the module
+// file isn't present (e.g. in local development or CI).
 
 export async function registerRoutes(
   httpServer: Server,
@@ -15,19 +17,37 @@ export async function registerRoutes(
   app.post(api.chat.send.path, async (req, res) => {
     try {
       const { message } = api.chat.send.input.parse(req.body);
-      
-      const response = await openai.chat.completions.create({
-        model: "gpt-5.1",
-        messages: [
-          { 
-            role: "system", 
-            content: "You are an AI assistant for Nasir's portfolio website. Nasir has 4+ years of experience in web development (Next.js, GraphQL, Git, Material UI, etc.), data entry, video editing, and graphic design. Answer questions about his skills, experience, and availability professionally." 
-          },
-          { role: "user", content: message }
-        ],
-      });
 
-      const reply = response.choices[0]?.message?.content || "I'm sorry, I couldn't process that.";
+      // Attempt to dynamically import the optional `openai` integration.
+      // If the module isn't present, fall back to a simple canned reply
+      // so the server can run without the integration.
+      let openaiClient: any = null;
+      try {
+        const mod = await import("openai");
+        openaiClient = new (mod as any).OpenAI();
+      } catch (e) {
+        openaiClient = null;
+      }
+
+      if (openaiClient?.chat?.completions?.create) {
+        const response = await openaiClient.chat.completions.create({
+          model: "gpt-5.1",
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are an AI assistant for Naeem's portfolio website. Naeem khan has 4+ years of experience in web development (Next.js, Angular, GraphQL, Git, Material UI,UX, etc.), data entry, video editing, and graphic design. Answer questions about his skills, experience, and availability professionally.",
+            },
+            { role: "user", content: message },
+          ],
+        });
+
+        const reply = response.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that.";
+        return res.json({ reply });
+      }
+
+      // Fallback reply if OpenAI integration not available
+      const reply = `Thanks — I received: ${message}`;
       res.json({ reply });
     } catch (err) {
       if (err instanceof z.ZodError) {
